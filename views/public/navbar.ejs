@@ -1,0 +1,17 @@
+<nav>
+  <ul>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/jobs">All Gigs</a>
+    </li>
+    <li>
+      <% if(isLogin) {%>
+        <a href="/logout">Logout</a>  
+      <% } else { %>
+        <a href="/login">Login</a>  
+      <% } %> 
+    </li>     
+  </ul>
+</nav>

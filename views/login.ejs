@@ -1,0 +1,28 @@
+<%- include('public/header') %>  
+<section id="add" class="container">
+  <div class="form-wrap">
+    <h1>Login</h1>
+    <p>Please fill your credentials</p>
+
+    <% if (errMessage) { %> 
+      <p style="color: red;">Error : <%= errMessage %> </p>
+      <% } %> 
+
+    <form action="/login" method="POST">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" class="input-box" placeholder="Enter your Last Name"
+        minlength="5" maxlength="15">
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" class="input-box" placeholder="Enter a Password"
+          required>
+      </div>
+      <input type="submit" value="Login" class="btn btn-reverse">
+    </form>
+    <br>
+    <a href="/register">Doesnt Have an Account ?</a>
+  </div>
+</section>
+<%- include('public/footer') %>  

@@ -1,0 +1,21 @@
+<%- include('public/header') %>  
+
+  <section id="gigs" class="container">
+    <% if (errMessage) { %> 
+      <p style="color: red;">Error : <%= errMessage %> </p>
+      <% } %> 
+    <h1>All Jobs</h1>
+
+    <% data.forEach(e=> { %>
+      <div class="gig">
+        <h3 style="margin: auto;"><%= e.name %></h3>
+        <p style="margin-top: 0; margin-bottom: 4;">Salary : <%= e.salary %></p>
+        <a href="#" class="btn btn-reverse">Apply Now</a>
+        <div class="tech">
+          <br>
+          <small>Skills Needed: <span><%= e.skill %></span></small>
+        </div>
+      </div>
+    <% }) %> 
+  </section>
+<%- include('public/footer') %>  

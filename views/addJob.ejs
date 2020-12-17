@@ -1,0 +1,47 @@
+<%- include('public/header') %>  
+<section id="add" class="container">
+  <div class="form-wrap">
+    <h1>Add a Job</h1>
+    <p>Please fill all the avaliable field below</p>
+    <form action="/jobs/add" method="POST">
+      <div class="input-group">
+        <label for="name">Job Name</label>
+        <input type="text" name="name" id="name" class="input-box" placeholder="eg. Small Wordpress website, React developer"
+          maxlength="100" required>
+      </div>
+      <div class="input-group">
+        <label for="skill">Skills Needed</label>
+        <input type="text" name="skill" id="skill" class="input-box" placeholder="eg. javascript, react, PHP"
+        maxlength="100">
+      </div>
+      <div class="input-group">
+        <label for="salary">Salary (Leave blank for unknown)</label>
+        <input type="number" name="salary" id="salary" class="input-box" placeholder="eg. 500, 5000, 10000">
+      </div>
+      <input type="submit" value="Add Job" class="btn btn-reverse">
+    </form>
+  </div>
+</section>
+
+<section id="gigs" class="container">
+  <h1>Your Post</h1>
+  <% data.forEach(e=> { %>
+    <div class="gig">
+      <h3 style="margin: auto;"><%= e.name %></h3>
+      <p style="margin-top: 0; margin-bottom: 4;">Salary : <%= e.salary %></p>
+      <div class="tech">
+        <small>Skills Needed: <span><%= e.skill %></span></small>
+      </div>
+      <ul>
+        <% if(e.status === 'up') { %>
+          <li><a href="/jobs/drop/<%= e.id %>" class="btn btn-reverse">Drop</a></li>
+        <% } else { %>
+          <li><a href="/jobs/up/<%= e.id %>" class="btn btn-reverse">Up</a></li>
+          <li><a href="/jobs/delete/<%= e.id %>" class="btn btn-reverse">Delete</a></li>
+        <% } %> 
+        <li><a href="/jobs/update/<%= e.id %>" class="btn btn-reverse">Update</a></li>
+      </ul>
+    </div>
+  <% }) %> 
+</section>
+<%- include('public/footer') %>  

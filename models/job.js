@@ -1,4 +1,5 @@
 'use strict';
+const { finished } = require('nodemailer/lib/xoauth2');
 const {
   Model
 } = require('sequelize');

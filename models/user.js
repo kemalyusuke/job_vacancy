@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'UserId'
       })
     }
+    fullname(){
+      return this.first_name + ' ' + this.last_name
+    }
   };
   User.init({
     username: DataTypes.STRING,
@@ -32,8 +35,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
     hooks : {
       beforeCreate(instance, options) {
-        
-
         instance.password = hashing(instance.password)
       }
     },

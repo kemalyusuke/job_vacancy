@@ -1,0 +1,25 @@
+<%- include('public/header') %>  
+<section id="add" class="container">
+  <div class="form-wrap">
+    <h1>Update Job</h1>
+    <p>Please change the desired field</p>
+    <form action="/jobs/update/<%= data.id %>" method="POST">
+      <div class="input-group">
+        <label for="name">Job Name</label>
+        <input type="text" name="name" id="name" class="input-box" placeholder="eg. Small Wordpress website, React developer" value="<%= data.name %>"
+          maxlength="100" required>
+      </div>
+      <div class="input-group">
+        <label for="skill">Skills Needed</label>
+        <input type="text" name="skill" id="skill" class="input-box" placeholder="eg. javascript, react, PHP" value="<%= data.skill %>"
+        maxlength="100">
+      </div>
+      <div class="input-group">
+        <label for="salary">Salary (Leave blank for unknown)</label>
+        <input type="number" name="salary" id="salary" class="input-box" placeholder="eg. 500, 5000, 10000" value="<%= data.salary %>">
+      </div>
+      <input type="submit" value="Update Job" class="btn btn-reverse">
+    </form>
+  </div>
+</section>
+<%- include('public/footer') %>  

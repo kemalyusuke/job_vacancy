@@ -62,6 +62,9 @@ class Controller {
   }
   static getAddJobHandler(req, res) {
     Job.findAll({
+      where:{
+        UserId: req.session.UserId
+      },
       include: User
     })
     .then(data => {
@@ -135,6 +138,79 @@ class Controller {
     })
     .catch(err => res.send(err.message))
   }
+  static getUpdateJobHandler(req, res) {
+    Job.findByPk(req.params.JobId)
+    .then(data => {
+      console.log(data.salary);
+      res.render('updateJob', {data, isLogin: true, isCompany: true, isJob: true, pageName : 'Update Job'})
+    })
+  }
+  static postUpdateJobHandler(req, res) {
+    let param = {
+      name:req.body.name,
+      skill:req.body.skill,
+      salary:req.body.salary,
+    }
+    Job.update(param,{
+      where: {
+        id:req.params.JobId
+      }
+    })
+    .then((data) =>{
+      res.redirect('/jobs/add')
+    })
+    .catch(err => res.send(err.message))
+  }
+  static getApplyJobHandler(req, res) {
+    let dataEmail = {
+
+    }
+    let param = {
+      JobId: req.params.JobId,
+      UserId: req.session.UserId
+    }
+
+    Apply.findOne({
+      where: param
+    })
+    .then(data => {
+      console.log(param);
+      if (data) res.redirect('/jobs?error= You already apply for this job')
+      else return Apply.create(param) 
+    })
+    .then(data => {
+      return User.findByPk(param.UserId, {
+        include: {
+          model: Job,
+          where: {
+            id: param.JobId
+          }
+        }
+      })
+    })
+    .then(data => {
+      console.log(data.Jobs[0].name);
+      dataEmail.sender = data.email
+      dataEmail.senderfullname = data.fullname()
+      dataEmail.jobName = data.Jobs[0].name
+      dataEmail.jobSkill = data.Jobs[0].skill
+      dataEmail.jobSalary = data.Jobs[0].salary
+      return User.findByPk(data.Jobs[0].UserId)
+    })
+    .then(data => {
+      dataEmail.emailTo = data.email
+      dataEmail.companyFullName = data.fullname()
+      return Apply.generateEmail(dataEmail)
+    })
+    .then(data =>{
+      console.log('Email has ben sent');
+      res.redirect('/jobs?msg= Apply Success')
+    })
+    .catch(err => {
+      res.send(err.message)
+    })
+  }
+
 
 }
 module.exports = Controller

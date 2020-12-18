@@ -3,7 +3,7 @@ const app = express()
 const router = require('./routes')
 const session = require('express-session')
 
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(session({
   secret: 'ppsolokemal',
